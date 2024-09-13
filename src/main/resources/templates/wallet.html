@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+	layout:decorator="layout">
+
+<head>
+<title>Wallet Fund Transfer</title>
+</head>
+<body>
+	<div layout:fragment="content">
+	<br><br>
+		<div class="panel panel-default" style="border: 1px solid black; margin-left:120px">
+			<h4 th:if="${emsg} !=null" th:text="${emsg}" style = "color:green"></h4>
+			<div class="panel-body">
+			<div th:include="menu"></div>
+				<form id="walletForm" action="#" th:action="@{/wallet/walletFunds}" method="post"
+					role="form">
+
+					<fieldset>
+						<legend>Wallet Fund Transfer:</legend>
+						<table id="example" class="table table-bordered">
+							<tr>
+								<th>Applicant First Name</th>
+								<th>Applicant Middle Name</th>
+								<th>Applicant Last Name</th>
+								<th>Fg First Name</th>
+								<th>Fg Middle Name</th>
+								<th>Fg Last Name</th>
+								<th>Sg First Name</th>
+								<th>Sg Middle Name</th>
+								<th>Sg Last Name</th>
+								<th>Loan Amount</th>
+								<th>Approve</th>
+							</tr>
+							<tr th:each="custLoanDetail : ${custLoanDetails}">
+								<td th:text="${custLoanDetail.applicantDetails.applicantFirstName}"></td>
+								<td th:text="${custLoanDetail.applicantDetails.applicantMidName}"></td>
+								<td th:text="${custLoanDetail.applicantDetails.applicantLastName}"></td>
+								<td th:text="${custLoanDetail.applicantDetails.fgFirstName}"></td>
+								<td th:text="${custLoanDetail.applicantDetails.fgMidName}"></td>
+								<td th:text="${custLoanDetail.applicantDetails.fgLastName}"></td>
+								<td th:text="${custLoanDetail.applicantDetails.sgFirstName}"></td>
+								<td th:text="${custLoanDetail.applicantDetails.sgMidName}"></td>
+								<td th:text="${custLoanDetail.applicantDetails.sgLastName}"></td>
+								<td th:text="${custLoanDetail.loanAmount}"></td>
+								<td><button id ="submitButton" onclick ="return validate();" type="submit" class="btn btn-success"
+										value="APPROVED">Fund Transfer</button></td>
+								<td><input type="hidden" id="applicantFirstName" name="id"
+									th:value="${custLoanDetail.id}"></td>
+							</tr>
+						</table>
+
+					</fieldset>
+				</form>
+			</div>
+		</div>
+		<script type="text/javascript">
+			function validate() {
+				$('#walletForm').submit(function(){
+		    	$("#submitButton", this)
+		     	 .html("Please Wait...")
+		     	 .attr('disabled', 'disabled');
+			});
+			}
+
+		</script>
+		<script th:src="@{'/assets/js/jquery-2.1.4.min.js'}"></script>
+</body>
+
+</html>

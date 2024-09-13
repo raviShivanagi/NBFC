@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+	layout:decorator="layout">
+
+<head>
+<title>View Applied Loan</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<br>
+		<br>
+		<div class="panel panel-default" style="border: 1px solid black; margin-left:120px">
+			<h4 th:if="${emsg} !=null" th:text="${emsg}" style="color: green"></h4>
+			<div class="panel-body">
+				<div th:include="menu"></div>
+				<form action="#" th:action="@{/wallet/walletFunds}" method="post"
+					role="form">
+
+					<fieldset>
+						<legend>View Applied Loan:</legend>
+						<table id="table_id">
+							<thead>
+								<tr>
+									<th>Applicant First Name</th>
+									<th>Applicant Middle Name</th>
+									<th>Applicant Last Name</th>
+									<th>Loan Amount</th>
+									<th>Interest Rate</th>
+									<th>Total Interest</th>
+									<th>Loan Tenure</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="custLoanDetail : ${custLoanDetailList}">
+									<td
+										th:text="${custLoanDetail.applicantDetails.applicantFirstName}"></td>
+									<td
+										th:text="${custLoanDetail.applicantDetails.applicantMidName}"></td>
+									<td
+										th:text="${custLoanDetail.applicantDetails.applicantLastName}"></td>
+									<td th:text="${custLoanDetail.loanAmount}"></td>
+									<td th:text="${custLoanDetail.interestRate}"></td>
+									<td th:text="${custLoanDetail.interest}"></td>
+									<td th:text="${custLoanDetail.loanTenure}"></td>
+
+								</tr>
+							</tbody>
+						</table>
+						<script type="text/javascript" charset="utf8"
+							src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js"></script>
+						<script type="text/javascript" charset="utf8"
+							src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
+						<script>
+							$(function() {
+								$("#table_id").dataTable();
+							});
+						</script>
+
+					</fieldset>
+				</form>
+			</div>
+		</div>
+		<!-- 		<script th:src="@{'/assets/js/jquery-2.1.4.min.js'}"></script> -->
+		<!-- 		<script th:src="@{'/assets/js/addApplicant.js'}"></script> -->
+</body>
+
+</html>

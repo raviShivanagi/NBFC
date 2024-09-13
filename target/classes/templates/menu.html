@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title layout:title-pattern="$DECORATOR_TITLE - $CONTENT_TITLE">SpringBoot
+	Thymeleaf</title>
+
+<style>
+.wrapper .sidebar {
+	background: #ebeff7;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 225px;
+	height: 100%;
+	padding: 20px 0;
+	transition: all 0.5s ease;
+}
+a{
+color:#7f858b;
+}
+</style>
+
+</head>
+
+<body>
+	<div class="wrapper">
+		<!--Top menu -->
+		<div class="sidebar">
+			<br>
+			<br>
+			<div sec:authorize="hasRole('ROLE_ADMIN')">
+			<ul class="nav">
+				<li><a th:href="@{/home}">Dashboard</a></li>
+				<li><a th:href="@{/applicant/add}">Add applicant</a></li>
+				<li><a th:href="@{/applicant/getDocuments}">KYC</a></li>
+				<li><a th:href="@{/emi/getEmiCalculator}">Emi Calculator</a></li>
+				<li><a th:href="@{/wallet/getWallet}">Wallet</a></li>
+				<li><a th:href="@{/applicant/pendingLoan}">View Pending Loan</a></li>
+				<li><a th:href="@{/applicant/appliedLoan}">View Applied Loan</a></li>
+				<li><a th:href="@{/transaction/getTransaction}">Transaction Details</a></li>
+			</ul>
+			</div>
+			<div sec:authorize="hasRole('ROLE_USER')">
+			<ul class="nav">
+				<li><a th:href="@{/home}">Dashboard</a></li>
+				<li><a th:href="@{/applicant/add}">Add applicant</a></li>
+			</ul>
+			</div>
+		</div>
+	</div>
+
+
+
+	<!-- <script th:src="@{'/assets/js/jquery-2.1.4.min.js'}"></script>
+	<script th:src="@{'/assets/bootstrap/js/bootstrap.min.js'}"></script> -->
+
+</body>
+</html>

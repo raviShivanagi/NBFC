@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+	layout:decorator="layout">
+
+<head>
+<title>KYC Approve Loan</title>
+</head>
+<body>
+	<div layout:fragment="content">
+	<br><br>
+		<div class="panel panel-default" style="border: 1px solid black; margin-left:120px">
+			<h4 th:if="${emsg} !=null" th:text="${emsg}" style = "color:green"></h4>
+			<div class="panel-body">
+			<div th:include="menu"></div>
+				<form id="kycForm" action="#" th:action="@{/applicant/checker}" method="post"
+					role="form">
+
+					<fieldset>
+						<legend>KYC Approve Loan:</legend>
+						<table id="example" class="table table-bordered "
+							style="width: 100%; overflow-y: scroll; display: block;">
+							<tr>
+
+								<th>Applicant First Name</th>
+								<th>Applicant Middle Name</th>
+								<th>Applicant Last Name</th>
+								<th>Fg First Name</th>
+								<th>Fg Middle Name</th>
+								<th>Fg Last Name</th>
+								<th>Sg First Name</th>
+								<th>Sg Middle Name</th>
+								<th>Sg Last Name</th>
+								<th>Id Proof</th>
+								<th>Fg Adhar</th>
+								<th>Fg PAN</th>
+								<th>Fg Cancelled Cheque</th>
+								<th>Sg Adhar</th>
+								<th>Sg PAN</th>
+								<th>Sg Cancelled Cheque</th>
+								<th>Approve</th>
+								<th>Reject</th>
+							</tr>
+							<tr th:each="applicantDetail : ${applicantDetails}">
+								<td th:text="${applicantDetail.applicantFirstName}"></td>
+								<td th:text="${applicantDetail.applicantMidName}"></td>
+								<td th:text="${applicantDetail.applicantLastName}"></td>
+								<td th:text="${applicantDetail.fgFirstName}"></td>
+								<td th:text="${applicantDetail.fgMidName}"></td>
+								<td th:text="${applicantDetail.fgLastName}"></td>
+								<td th:text="${applicantDetail.sgFirstName}"></td>
+								<td th:text="${applicantDetail.sgMidName}"></td>
+								<td th:text="${applicantDetail.sgLastName}"></td>
+								<td><a
+									th:href="@{'/applicant/downloadfile?type=idProof&id=' + ${applicantDetail.id }}"><i
+										class="fa fa-download"></td>
+								<td><a
+									th:href="@{'/applicant/downloadfile?type=fgAdhar&id=' + ${applicantDetail.id }}"><i
+										class="fa fa-download"></td>
+								<td><a
+									th:href="@{'/applicant/downloadfile?type=fgPan&id=' + ${applicantDetail.id }}"><i
+										class="fa fa-download"></td>
+								<td><a
+									th:href="@{'/applicant/downloadfile?type=fgCancelledCheque&id=' + ${applicantDetail.id }}"><i
+										class="fa fa-download"></td>
+								<td><a
+									th:href="@{'/applicant/downloadfile?type=sgAdhar&id=' + ${applicantDetail.id }}"><i
+										class="fa fa-download"></td>
+								<td><a
+									th:href="@{'/applicant/downloadfile?type=sgPan&id=' + ${applicantDetail.id }}"><i
+										class="fa fa-download"></td>
+								<td><a
+									th:href="@{'/applicant/downloadfile?type=sgCancelledCheque&id=' + ${applicantDetail.id }}"><i
+										class="fa fa-download"></td>
+								<td><input type="hidden" id="applicantFirstName" name="id"
+									th:value="${applicantDetail.id}">
+									<button id="approveButton" type="submit" onclick ="validate('approve');" class="btn btn-success" name="action"
+										value="APPROVED">Approve</button></td>
+								<td><input type="hidden" id="applicantFirstName" name="id"
+									th:value="${applicantDetail.id}">
+									<button id="rejectButton" type="submit" class="btn btn-danger" onclick ="validate('reject');" name="action"
+										value="REJECT">Reject</button></td>
+							</tr>
+						</table>
+
+					</fieldset>
+				</form>
+			</div>
+		</div><script type="text/javascript">
+			function validate(type) {
+				alert(type);
+				if(type == "approve") {
+					$('#kycForm').submit(function(){
+				    	$("#submitButton", this)
+				     	 .html("Please Wait...")
+				     	 .attr('disabled', 'disabled');
+					});
+				} else {
+					$('#kycForm').submit(function(){
+				    	$("#rejectButton", this)
+				     	 .html("Please Wait...")
+				     	 .attr('disabled', 'disabled');
+					});
+				}
+				
+			}
+
+		</script>
+		<script th:src="@{'/assets/js/jquery-2.1.4.min.js'}"></script>
+</body>
+
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+	layout:decorator="layout">
+
+<head>
+<!-- Datatable plugin CSS file -->
+	<link rel="stylesheet" href=
+"https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css" />
+	<!-- jQuery library file -->
+	<script type="text/javascript"
+	src="https://code.jquery.com/jquery-3.5.1.js">
+	</script>
+
+	<!-- Datatable plugin JS library file -->
+	<script type="text/javascript" src=
+"https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js">
+	</script>
+<div class="col-sm-4 col-xs-1"></div>
+<title>Emi Calculator</title>
+</head>
+
+
+
+<body>
+	<div layout:fragment="content">
+
+		<!-- <div class="panel panel-default" style="border:1px solid black;"> -->
+
+		<div class="panel-body" style="margin-left:120px;">
+			<div th:include="menu"></div>
+			<form  id = "emiForm" th:action="@{/emi/calculateEmi}" method="post" role="form">
+
+				<fieldset>
+					<h1 >Emi Calculator</h1>
+
+					<div style="margin-top: 80px;">
+						<div class="row">
+							<div class="form-group col-md-6">
+								<font size="4"> <label>Home Loan Amount</label></font> <input
+									type="text" class="form-control" id="loanAmount"
+									name="loanAmount" th:value="${emiCalculatorBean.loanAmount}"
+									placeholder="Home Loan Amount">
+							</div>
+
+							<div class="row" th:if="${emiCalculatorBean.emi} !=null">
+								<div class="form-group col-md-6">
+									<font size="4"> <label>EMI</label></font> <input type="text"
+										class="form-control" disabled=true id="emi"
+										th:value="${emiCalculatorBean.emi}" name=emi
+										placeholder="Loan Tenure">
+								</div>
+
+							</div>
+
+						</div>
+
+						<div class="row">
+							<div class="form-group col-md-6">
+								<font size="4"><label>Interest Rate</label></font> <input
+									type="text" class="form-control" id="interestRate"
+									name="interestRate" th:value="${emiCalculatorBean.interestRate}"
+									placeholder="Interest Rate">
+							</div>
+
+							<div class="row"
+								th:if="${emiCalculatorBean.totalInterest} !=null">
+								<div class="form-group col-md-6">
+									<font size="4"> <label>Total Interest</label></font> <input
+										type="text" class="form-control" disabled=true id="emi"
+										th:value="${emiCalculatorBean.totalInterest}" name=emi
+										placeholder="Loan Tenure">
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="form-group col-md-6">
+								<font size="4"> <label>Loan Tenure</label></font> <input
+									type="text" class="form-control" id="loanTenure"
+									name="loanTenure" th:value="${emiCalculatorBean.loanTenure}"
+									placeholder="Loan Tenure">
+							</div>
+
+							<div class="row"
+								th:if="${emiCalculatorBean.totalInterest} !=null">
+								<div class="form-group col-md-6">
+									<font size="4"> <label>Total Amount</label></font> <input
+										type="text" class="form-control" disabled=true id="emi"
+										th:value="${emiCalculatorBean.totalAmount}" name=emi
+										placeholder="Loan Tenure">
+								</div>
+
+							</div>
+
+						</div>
+						<div style="margin-left: 520px; margin-top: 40px;">
+							<button id ="submitButton" type="submit" onclick ="return validate();" class="btn btn-danger">submit</button>
+						</div>
+					</div>
+
+						<table id="example" class="table table-striped table-bordered" style="margin-top: 80px;">
+							<tr>
+
+								<th>Emi Number</th>
+								<th>Principal per month</th>
+								<th>Interest per month</th>
+								<th>Balance Principal</th>
+							</tr>
+							<tr th:each="emi : ${emiList}">
+								<td th:text="${emi.emiNumber}"></td>
+								<td th:text="${emi.principalPerMonth}"></td>
+								<td th:text="${emi.interestPerMonth}"></td>
+								<td th:text="${emi.balancePrincipa}"></td>
+							</tr>
+						</table>
+				</fieldset>
+			</form>
+			<!-- 		</div> -->
+		</div>
+		<!-- 	</div> -->
+		
+
+		<script th:src="@{'/assets/js/emiCalculator.js'}"></script>
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+	layout:decorator="layout">
+
+<head>
+<title>Transaction Details</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<br> <br>
+		<div class="panel panel-default" style="border: 1px solid black;">
+			<h4 th:if="${emsg} !=null" th:text="${emsg}" style="color: green"></h4>
+			<div class="panel-body">
+				<div th:include="menu"></div>
+				<form id = "txnDetailsForm" action="#" th:action="@{/transaction/getTxn}" method="post"
+					role="form">
+
+					<legend>Transaction Details:</legend>
+					<fieldset>
+						<div class="row">
+							<div class="col-lg-3">
+								<select class="form-control" id="ddl" name="searchBy" selected>
+									<option value="">Select</option>
+									<option th:value="Daily" th:text="Daily"></option>
+									<option th:value="Monthly" th:text="Monthly"></option>
+								</select>
+							</div>
+							<div>
+								<button id="submitButton" type="submit" onclick ="return validate();" class="btn btn-success">Submit</button>
+								<a class ="btn btn-primary"  style="margin-left:15px"th:href="@{'/transaction/downloadfile'}">Download</a>
+							</div>
+						</div>
+						<div class="row" style="margin-top: 40px; margin-left:80px">
+							<table id="example" style="width: 90%;"
+								class="table table-bordered">
+								<tr>
+									<th>Transaction Id</th>
+									<th>Amount</th>
+									<th>Customer First Name</th>
+									<th>Customer Middle Name</th>
+									<th>Customer Last Name</th>
+									<th>Loan Id</th>
+									<th>Status</th>
+									<th>Transaction Date</th>
+								</tr>
+								<tr th:each="transaction : ${transactionDetails}">
+									<td th:text="${transaction.transactionId}"></td>
+									<td th:text="${transaction.amount}"></td>
+									<td
+										th:text="${transaction.applicantDetails.applicantFirstName}"></td>
+									<td th:text="${transaction.applicantDetails.applicantMidName}"></td>
+									<td th:text="${transaction.applicantDetails.applicantLastName}"></td>
+									<td th:text="${transaction.custLoanDetails.id}"></td>
+									<td th:text="${transaction.status}"></td>
+									<td th:text="${transaction.creationDate}"></td>
+								</tr>
+							</table>
+						</div>
+					</fieldset>
+				</form>
+			</div>
+		</div>
+		<script type="text/javascript">function validate() {
+			$('#txnDetailsForm').submit(function(){
+			    $("#submitButton", this)
+			      .html("Please Wait...")
+			      .attr('disabled', 'disabled');
+			});
+			}
+</script>
+		<script th:src="@{'/assets/js/jquery-2.1.4.min.js'}"></script>
+	</div>
+</body>
+
+</html>
